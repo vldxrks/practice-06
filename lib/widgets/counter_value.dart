@@ -18,11 +18,13 @@ class CounterValue extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('ПОТОЧНЕ ЗНАЧЕННЯ',
-                style: theme.textTheme.labelLarge?.copyWith(
-                  color: theme.colorScheme.onPrimaryContainer,
-                  letterSpacing: 1.4,
-                )),
+            Text(
+              'ПОТОЧНЕ ЗНАЧЕННЯ',
+              style: theme.textTheme.labelLarge?.copyWith(
+                color: theme.colorScheme.onPrimaryContainer,
+                letterSpacing: 1.4,
+              ),
+            ),
             const SizedBox(height: 16),
             Semantics(
               liveRegion: true,
@@ -30,18 +32,22 @@ class CounterValue extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.centerLeft,
-                child: Text('$value',
-                    key: const Key('counter-value'),
-                    style: theme.textTheme.displayLarge?.copyWith(
-                      fontSize: 88,
-                      fontWeight: FontWeight.w600,
-                      color: theme.colorScheme.onPrimaryContainer,
-                    )),
+                child: Text(
+                  '$value',
+                  key: const Key('counter-value'),
+                  style: theme.textTheme.displayLarge?.copyWith(
+                    fontSize: 88,
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.onPrimaryContainer,
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 12),
-            Text('Кожна зміна зберігається в історії.',
-                style: TextStyle(color: theme.colorScheme.onPrimaryContainer)),
+            Text(
+              'Кожна зміна зберігається в історії.',
+              style: TextStyle(color: theme.colorScheme.onPrimaryContainer),
+            ),
           ],
         ),
       ),

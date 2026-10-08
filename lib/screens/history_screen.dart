@@ -31,8 +31,10 @@ class HistoryScreen extends StatelessWidget {
                       const SizedBox(height: 16),
                       OutlinedButton.icon(
                         key: const Key('clear-history'),
-                        onPressed: () =>
-                            CounterScope.of(context, listen: false).clearHistory(),
+                        onPressed: () => CounterScope.of(
+                          context,
+                          listen: false,
+                        ).clearHistory(),
                         icon: const Icon(Icons.delete_outline),
                         label: const Text('Очистити історію'),
                       ),

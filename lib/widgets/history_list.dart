@@ -21,8 +21,10 @@ class HistoryList extends StatelessWidget {
               SizedBox(height: 20),
               Text('Історія порожня', style: TextStyle(fontSize: 24)),
               SizedBox(height: 8),
-              Text('Змініть лічильник, і перший запис з’явиться тут.',
-                  textAlign: TextAlign.center),
+              Text(
+                'Змініть лічильник, і перший запис з’явиться тут.',
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
@@ -61,14 +63,20 @@ class HistoryEntryTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(entry.label,
-                      style: Theme.of(context).textTheme.titleMedium),
+                  Text(
+                    entry.label,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                   const SizedBox(height: 4),
-                  Text(entry.formattedTime,
-                      style: Theme.of(context).textTheme.bodySmall),
+                  Text(
+                    entry.formattedTime,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
                   const SizedBox(height: 8),
-                  Text('${entry.before} → ${entry.after}',
-                      style: Theme.of(context).textTheme.titleLarge),
+                  Text(
+                    '${entry.before} → ${entry.after}',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
                 ],
               ),
             ),

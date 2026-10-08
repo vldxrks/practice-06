@@ -15,4 +15,6 @@ android/key.properties
 *.keystore
 *.log
 !docs/*.log
+__pycache__/
+*.pyc
 

@@ -21,8 +21,10 @@ class CounterModel extends ChangeNotifier {
     final next = _value + delta;
     if (next < 0) return false;
     if (delta == 0) return true;
-    _record(next,
-        delta > 0 ? CounterAction.increment : CounterAction.decrement);
+    _record(
+      next,
+      delta > 0 ? CounterAction.increment : CounterAction.decrement,
+    );
     return true;
   }
 
@@ -38,12 +40,14 @@ class CounterModel extends ChangeNotifier {
   }
 
   void _record(int next, CounterAction action) {
-    _history.add(CounterEntry(
-      timestamp: _now(),
-      action: action,
-      before: _value,
-      after: next,
-    ));
+    _history.add(
+      CounterEntry(
+        timestamp: _now(),
+        action: action,
+        before: _value,
+        after: next,
+      ),
+    );
     _value = next;
     notifyListeners();
   }
