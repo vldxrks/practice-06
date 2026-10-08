@@ -37,6 +37,7 @@ class _CounterAppState extends State<CounterApp> {
         debugShowCheckedModeBanner: false,
         title: 'Лічильник з історією',
         theme: ThemeData(
+          fontFamily: 'EvidenceFont',
           colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF315DA8)),
           useMaterial3: true,
         ),
