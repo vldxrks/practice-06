@@ -1,0 +1,12 @@
+{
+  "name": "Лічильник з історією",
+  "short_name": "Лічильник",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#faf9fd",
+  "theme_color": "#315da8",
+  "description": "Практична 6.1: State Management у Flutter",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false
+}
+
