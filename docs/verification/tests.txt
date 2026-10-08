@@ -1,0 +1,83 @@
+00:00 +0: loading /workspace/scratch/c491dfdcab64/practice-06-counter/test/evidence_test.dart
+00:00 +0: /workspace/scratch/c491dfdcab64/practice-06-counter/test/evidence_test.dart: capture screenshots and a measured rebuild journal
+00:00 +0 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/counter_model_test.dart: starts at zero with empty history
+00:00 +1 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/counter_model_test.dart: records time, action, before/after and newest-first order
+00:00 +2 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/counter_model_test.dart: rejects negative results without mutation or notification
+00:00 +3 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/counter_model_test.dart: reset is recorded; resetting zero is a no-op
+00:00 +4 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/counter_model_test.dart: clear history preserves the counter
+00:00 +5 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/counter_model_test.dart: returned history is immutable and is a stable snapshot
+00:00 +6 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/counter_model_test.dart: one notification per mutation, none for no-ops
+00:00 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
+build: CounterApp
+build: AppNavigator
+build: CounterScreen
+build: HistoryBadge
+build: CounterValue
+build: CounterControls
+build: CounterControls
+build: HistoryBadge
+build: CounterValue
+build: HistoryBadge
+build: CounterValue
+build: AppNavigator
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
+build: HistoryScreen
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
+build: CounterApp
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
+build: HistoryList
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
+build: AppNavigator
+build: CounterScreen
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
+build: HistoryBadge
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
+build: HistoryBadge
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
+build: CounterScreen
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
+build: CounterValue
+build: CounterControls
+build: CounterControls
+build: HistoryBadge
+build: CounterValue
+build: AppNavigator
+build: HistoryScreen
+build: HistoryList
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
+build: HistoryList
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
+build: HistoryBadge
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
+build: HistoryBadge
+build: HistoryBadge
+build: CounterValue
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
+build: CounterScreen
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
+build: AppNavigator
+build: CounterScreen
+build: AppNavigator
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
+build: HistoryList
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
+build: HistoryScreen
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
+build: HistoryBadge
+build: HistoryBadge
+build: CounterValue
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
+build: HistoryList
+build: HistoryBadge
+build: CounterScreen
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
+build: AppNavigator
+build: CounterScreen
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
+build: AppNavigator
+build: CounterScreen
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
+build: HistoryBadge
+build: CounterValue
+00:01 +9 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
+00:01 +10 ~1: All tests passed!

@@ -1,0 +1,13 @@
+ACTION: increment by 1
+build: HistoryBadge
+build: CounterValue
+
+ACTION: select step 5
+build: CounterControls
+
+ACTION: clear history
+build: HistoryList
+build: HistoryBadge
+build: HistoryBadge
+build: CounterValue
+
