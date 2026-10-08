@@ -209,37 +209,6 @@ build: CounterValue
 
 <!-- EVIDENCE:END -->
 
-## Як здати
-
-За умовою здається **посилання на GitHub repository**, а не ZIP.
-Після розпакування готової роботи збережіть каталог `.git`: у ньому коміти
-й обидва теги. Якщо розпаковувач його не відновив, клонуйте вкладений bundle:
-
-```bash
-git clone practice-06-counter.bundle counter-submission
-cd counter-submission
-```
-
-Створіть порожній GitHub-репозиторій без автоматичного README/.gitignore,
-потім у корені проєкту виконайте, замінивши `YOUR_LOGIN` своїм логіном:
-
-```bash
-git remote add origin https://github.com/YOUR_LOGIN/practice-06-counter.git
-git push -u origin main
-git push origin stage-1-lifting stage-2-inherited
-```
-
-Якщо репозиторій відновлено через `git clone` з bundle, `origin` уже існує.
-У цьому випадку замість `git remote add origin ...` використайте:
-
-```bash
-git remote set-url origin https://github.com/YOUR_LOGIN/practice-06-counter.git
-```
-
-У GitHub перевірте два теги й успішний запуск Actions. У Google Classroom
-вставте посилання на репозиторій. `build/`, SDK, кеші та локальні налаштування
-не входять до git. Історію роботи можна переглянути через `git log --oneline`.
-
 ## Висновок
 
 Спільний стан піднято до найближчого спільного предка на першому етапі,
