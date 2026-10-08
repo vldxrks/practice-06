@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MaterialApp(
-      home: Scaffold(body: Center(child: Text('Практична робота 6.1'))),
-    ));
+import 'app.dart';
+
+void main() => runApp(const CounterApp());
 
