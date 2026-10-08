@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../models/counter_entry.dart';
+import '../state/counter_scope.dart';
 
 class HistoryList extends StatelessWidget {
-  const HistoryList({super.key, required this.history});
-
-  final List<CounterEntry> history;
+  const HistoryList({super.key});
 
   @override
   Widget build(BuildContext context) {
     debugPrint('build: HistoryList');
+    final history = CounterScope.of(context).history;
     if (history.isEmpty) {
       return const Center(
         child: Padding(

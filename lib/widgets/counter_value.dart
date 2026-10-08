@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-class CounterValue extends StatelessWidget {
-  const CounterValue({super.key, required this.value});
+import '../state/counter_scope.dart';
 
-  final int value;
+class CounterValue extends StatelessWidget {
+  const CounterValue({super.key});
 
   @override
   Widget build(BuildContext context) {
     debugPrint('build: CounterValue');
+    final value = CounterScope.of(context).value;
     final theme = Theme.of(context);
     return Card.filled(
       margin: EdgeInsets.zero,

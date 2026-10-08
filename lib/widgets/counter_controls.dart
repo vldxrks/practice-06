@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CounterControls extends StatefulWidget {
-  const CounterControls({super.key, required this.onChange, required this.onReset});
+import '../state/counter_scope.dart';
 
-  final bool Function(int delta) onChange;
-  final VoidCallback onReset;
+class CounterControls extends StatefulWidget {
+  const CounterControls({super.key});
 
   @override
   State<CounterControls> createState() => _CounterControlsState();
@@ -15,7 +14,7 @@ class _CounterControlsState extends State<CounterControls> {
   int _step = 1;
 
   void _change(int delta) {
-    if (!widget.onChange(delta)) {
+    if (!CounterScope.of(context, listen: false).change(delta)) {
       final messenger = ScaffoldMessenger.of(context);
       messenger.hideCurrentSnackBar();
       messenger.showSnackBar(const SnackBar(
@@ -67,7 +66,7 @@ class _CounterControlsState extends State<CounterControls> {
         const SizedBox(height: 12),
         OutlinedButton.icon(
           key: const Key('reset'),
-          onPressed: widget.onReset,
+          onPressed: () => CounterScope.of(context, listen: false).reset(),
           icon: const Icon(Icons.restart_alt),
           label: const Text('Скинути'),
         ),

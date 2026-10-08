@@ -7,17 +7,9 @@ import '../widgets/history_badge.dart';
 class CounterScreen extends StatelessWidget {
   const CounterScreen({
     super.key,
-    required this.value,
-    required this.historyCount,
-    required this.onChange,
-    required this.onReset,
     required this.onOpenHistory,
   });
 
-  final int value;
-  final int historyCount;
-  final bool Function(int delta) onChange;
-  final VoidCallback onReset;
   final VoidCallback onOpenHistory;
 
   @override
@@ -27,7 +19,7 @@ class CounterScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Лічильник'),
         actions: [
-          HistoryBadge(count: historyCount),
+          const HistoryBadge(),
           IconButton(
             key: const Key('open-history'),
             tooltip: 'Відкрити історію',
@@ -47,9 +39,9 @@ class CounterScreen extends StatelessWidget {
                 Text('Маленькі кроки. Повна історія.',
                     style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: 24),
-                CounterValue(value: value),
+                const CounterValue(),
                 const SizedBox(height: 32),
-                CounterControls(onChange: onChange, onReset: onReset),
+                const CounterControls(),
                 const SizedBox(height: 24),
                 const Text('Мінімальне значення - 0. '
                     'Крок можна змінювати в будь-який момент.'),
