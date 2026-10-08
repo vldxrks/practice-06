@@ -5,7 +5,11 @@ import '../widgets/history_badge.dart';
 import '../widgets/history_list.dart';
 
 class HistoryScreen extends StatelessWidget {
-  const HistoryScreen({super.key, required this.history, required this.onClear});
+  const HistoryScreen({
+    super.key,
+    required this.history,
+    required this.onClear,
+  });
 
   final List<CounterEntry> history;
   final VoidCallback onClear;

@@ -21,19 +21,24 @@ class _CounterAppState extends State<CounterApp> {
   bool _change(int delta) {
     if (_value + delta < 0) return false;
     if (delta == 0) return true;
-    _record(_value + delta,
-        delta > 0 ? CounterAction.increment : CounterAction.decrement);
+    _record(
+      _value + delta,
+      delta > 0 ? CounterAction.increment : CounterAction.decrement,
+    );
     return true;
   }
 
   void _record(int next, CounterAction action) {
     setState(() {
-      _history.insert(0, CounterEntry(
-        timestamp: (widget.now ?? DateTime.now)(),
-        action: action,
-        before: _value,
-        after: next,
-      ));
+      _history.insert(
+        0,
+        CounterEntry(
+          timestamp: (widget.now ?? DateTime.now)(),
+          action: action,
+          before: _value,
+          after: next,
+        ),
+      );
       _value = next;
     });
   }
@@ -52,32 +57,36 @@ class _CounterAppState extends State<CounterApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF315DA8)),
         useMaterial3: true,
       ),
-      home: Navigator(
-        pages: [
-          MaterialPage<void>(
-            key: const ValueKey('counter-page'),
-            child: CounterScreen(
-              value: _value,
-              historyCount: _history.length,
-              onChange: _change,
-              onReset: _reset,
-              onOpenHistory: () => setState(() => _historyVisible = true),
-            ),
-          ),
-          if (_historyVisible)
+      home: NavigatorPopHandler<void>(
+        enabled: _historyVisible,
+        onPopWithResult: (_) => setState(() => _historyVisible = false),
+        child: Navigator(
+          pages: [
             MaterialPage<void>(
-              key: const ValueKey('history-page'),
-              child: HistoryScreen(
-                history: List.unmodifiable(_history),
-                onClear: () => setState(_history.clear),
+              key: const ValueKey('counter-page'),
+              child: CounterScreen(
+                value: _value,
+                historyCount: _history.length,
+                onChange: _change,
+                onReset: _reset,
+                onOpenHistory: () => setState(() => _historyVisible = true),
               ),
             ),
-        ],
-        onDidRemovePage: (page) {
-          if (page.key == const ValueKey('history-page')) {
-            setState(() => _historyVisible = false);
-          }
-        },
+            if (_historyVisible)
+              MaterialPage<void>(
+                key: const ValueKey('history-page'),
+                child: HistoryScreen(
+                  history: List.unmodifiable(_history),
+                  onClear: () => setState(_history.clear),
+                ),
+              ),
+          ],
+          onDidRemovePage: (page) {
+            if (_historyVisible && page.key == const ValueKey('history-page')) {
+              setState(() => _historyVisible = false);
+            }
+          },
+        ),
       ),
     );
   }

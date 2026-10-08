@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CounterControls extends StatefulWidget {
-  const CounterControls({super.key, required this.onChange, required this.onReset});
+  const CounterControls({
+    super.key,
+    required this.onChange,
+    required this.onReset,
+  });
 
   final bool Function(int delta) onChange;
   final VoidCallback onReset;
@@ -18,10 +22,14 @@ class _CounterControlsState extends State<CounterControls> {
     if (!widget.onChange(delta)) {
       final messenger = ScaffoldMessenger.of(context);
       messenger.hideCurrentSnackBar();
-      messenger.showSnackBar(const SnackBar(
-        content: Text('Значення не може бути від’ємним. Оберіть менший крок '
-            'або спочатку збільште лічильник.'),
-      ));
+      messenger.showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Значення не може бути від’ємним. Оберіть менший крок '
+            'або спочатку збільште лічильник.',
+          ),
+        ),
+      );
     }
   }
 
@@ -45,25 +53,27 @@ class _CounterControlsState extends State<CounterControls> {
           },
         ),
         const SizedBox(height: 24),
-        Row(children: [
-          Expanded(
-            child: FilledButton.tonalIcon(
-              key: const Key('decrement'),
-              onPressed: () => _change(-_step),
-              icon: const Icon(Icons.remove),
-              label: const Text('Відняти'),
+        Row(
+          children: [
+            Expanded(
+              child: FilledButton.tonalIcon(
+                key: const Key('decrement'),
+                onPressed: () => _change(-_step),
+                icon: const Icon(Icons.remove),
+                label: const Text('Відняти'),
+              ),
             ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: FilledButton.icon(
-              key: const Key('increment'),
-              onPressed: () => _change(_step),
-              icon: const Icon(Icons.add),
-              label: const Text('Додати'),
+            const SizedBox(width: 12),
+            Expanded(
+              child: FilledButton.icon(
+                key: const Key('increment'),
+                onPressed: () => _change(_step),
+                icon: const Icon(Icons.add),
+                label: const Text('Додати'),
+              ),
             ),
-          ),
-        ]),
+          ],
+        ),
         const SizedBox(height: 12),
         OutlinedButton.icon(
           key: const Key('reset'),

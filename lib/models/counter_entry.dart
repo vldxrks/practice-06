@@ -15,10 +15,10 @@ class CounterEntry {
   final int after;
 
   String get label => switch (action) {
-        CounterAction.increment => 'Додано ${after - before}',
-        CounterAction.decrement => 'Віднято ${before - after}',
-        CounterAction.reset => 'Скинуто до нуля',
-      };
+    CounterAction.increment => 'Додано ${after - before}',
+    CounterAction.decrement => 'Віднято ${before - after}',
+    CounterAction.reset => 'Скинуто до нуля',
+  };
 
   String get formattedTime {
     final local = timestamp.toLocal();

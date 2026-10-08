@@ -44,15 +44,19 @@ class CounterScreen extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsets.all(24),
               children: [
-                Text('Маленькі кроки. Повна історія.',
-                    style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  'Маленькі кроки. Повна історія.',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
                 const SizedBox(height: 24),
                 CounterValue(value: value),
                 const SizedBox(height: 32),
                 CounterControls(onChange: onChange, onReset: onReset),
                 const SizedBox(height: 24),
-                const Text('Мінімальне значення - 0. '
-                    'Крок можна змінювати в будь-який момент.'),
+                const Text(
+                  'Мінімальне значення - 0. '
+                  'Крок можна змінювати в будь-який момент.',
+                ),
               ],
             ),
           ),
