@@ -2,9 +2,11 @@
 
 **Варіант 2: авторизація та профіль.** Застосунок «Особистий простір» реалізує вхід, перевірку полів, імітацію запиту до сервера, повторну спробу після помилки, редагування профілю та вихід.
 
-Готова друга частина розташована в гілці [`practice-06-part2`](https://github.com/vldxrks/practice-06/tree/practice-06-part2). Гілка `main` містить попередню роботу. Для здачі використовується посилання на цю гілку; звіт і докази виконання наведено нижче.
+Друга частина підготовлена в локальній гілці `practice-06-part2`; гілка `main` містить попередню роботу. Автоматична публікація заблокована відповіддю GitHub `403: Resource not accessible by integration`. Архів постачання містить повну історію в Git bundle та інструкцію публікації. Після виконання `git push -u origin practice-06-part2` робота буде доступна за [посиланням на гілку](https://github.com/vldxrks/practice-06/tree/practice-06-part2), яке можна здати в Classroom. Звіт і докази виконання наведено нижче.
 
 ## Запуск
+
+Якщо ви працюєте з отриманим архівом, відкрийте каталог `project/` і виконайте команди від `flutter pub get`. Команда `git clone` нижче призначена для використання після публікації гілки.
 
 Перевірено на **Flutter 3.35.7 / Dart 3.9.2**. Залежність `provider: ^6.1.5` зафіксована в `pubspec.lock` як 6.1.5+1. Інші пакети керування станом не використовуються.
 
@@ -75,7 +77,7 @@ flutter run -d chrome --dart-define=FAIL_FIRST_REQUEST=true
 
 ## Вимірювання перебудов: до та після
 
-Спочатку реалізовано робочу версію з `watch`/`Consumer`. Її код і результати збережено окремим комітом **`feat: implement login and profile UI with baseline rebuild measurements`**. Наступний коміт **`perf: isolate authentication and profile rebuilds with select and Selector`** містить оптимізацію та повторні вимірювання. Обидва доступні в [історії гілки](https://github.com/vldxrks/practice-06/commits/practice-06-part2).
+Спочатку реалізовано робочу версію з `watch`/`Consumer`. Її код і результати збережено окремим комітом **`feat: implement login and profile UI with baseline rebuild measurements`**. Наступний коміт **`perf: isolate authentication and profile rebuilds with select and Selector`** містить оптимізацію та повторні вимірювання. Обидва збережені в Git bundle та після публікації будуть доступні в [історії гілки](https://github.com/vldxrks/practice-06/commits/practice-06-part2).
 
 [`BuildProbe`](lib/widgets/build_probe.dart) у debug-режимі виконує `debugPrint('build: ...')` та рахує виклики позначених `build`/builder. Вимірювання проведені справжнім Flutter widget test [`rebuild_test.dart`](test/rebuild_test.dart), не розраховані теоретично.
 
