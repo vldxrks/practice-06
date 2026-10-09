@@ -1,0 +1,46 @@
+00:00 +0: loading /workspace/scratch/c491dfdcab64/practice-06-provider/test/models_test.dart
+00:00 +0: /workspace/scratch/c491dfdcab64/practice-06-provider/test/models_test.dart: validates email and password
+00:00 +1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/models_test.dart: valid account loads profile then logout clears it
+00:00 +2: /workspace/scratch/c491dfdcab64/practice-06-provider/test/models_test.dart: incorrect account produces an explicit credential error
+00:00 +3: /workspace/scratch/c491dfdcab64/practice-06-provider/test/models_test.dart: server failure permits retry without retaining credentials
+00:00 +4: /workspace/scratch/c491dfdcab64/practice-06-provider/test/models_test.dart: profile validation and no-op do not notify
+00:00 +5: /workspace/scratch/c491dfdcab64/practice-06-provider/test/models_test.dart: sign out cancels the result of a pending request
+00:00 +6: /workspace/scratch/c491dfdcab64/practice-06-provider/test/models_test.dart: dispose during request produces no late notification
+00:00 +7: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: validates fields, isolates text entry and password toggle
+build: AuthGate
+build: LoginScreen
+build: LoginForm
+build: AuthFeedback
+build: LoginAction
+build: LoginForm
+build: LoginAction
+00:01 +8: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: loading disables login, error retries, profile saves, logout clears form
+build: AuthGate
+build: LoginScreen
+build: LoginForm
+build: AuthFeedback
+build: LoginAction
+build: AuthGate
+build: AuthFeedback
+build: LoginAction
+build: AuthGate
+build: AuthFeedback
+build: LoginAction
+build: AuthGate
+build: AuthFeedback
+build: LoginAction
+build: AuthGate
+build: HomeScreen
+build: ProfileName
+build: ProfileEmail
+build: ProfileBio
+build: ProfileEditor
+build: ProfileEmail
+build: ProfileName
+build: ProfileBio
+build: AuthGate
+build: LoginScreen
+build: LoginForm
+build: AuthFeedback
+build: LoginAction
+00:02 +9: All tests passed!

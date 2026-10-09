@@ -1,48 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'models/auth_model.dart';
+import 'models/profile_model.dart';
+import 'services/fake_api.dart';
+import 'screens/home_screen.dart';
+import 'screens/login_screen.dart';
+import 'widgets/build_probe.dart';
 
-import 'screens/app_navigator.dart';
-import 'state/counter_model.dart';
-import 'state/counter_scope.dart';
-
-class CounterApp extends StatefulWidget {
-  const CounterApp({super.key, this.now});
-
-  final DateTime Function()? now;
-
+class ProfileApp extends StatelessWidget {
+  const ProfileApp({super.key, this.api});
+  final FakeApi? api;
   @override
-  State<CounterApp> createState() => _CounterAppState();
+  Widget build(BuildContext context) => MultiProvider(
+    providers: [
+      Provider<FakeApi>(
+        create: (_) =>
+            api ??
+            FakeApi(
+              failFirstRequest: const bool.fromEnvironment(
+                'FAIL_FIRST_REQUEST',
+              ),
+            ),
+      ),
+      ChangeNotifierProvider(create: (_) => ProfileModel()),
+      ChangeNotifierProvider(
+        create: (context) =>
+            AuthModel(context.read<FakeApi>(), context.read<ProfileModel>()),
+      ),
+    ],
+    child: MaterialApp(
+      title: 'Особистий простір',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        useMaterial3: true,
+        fontFamily: 'EvidenceFont',
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF356859)),
+        scaffoldBackgroundColor: const Color(0xFFF4F6F2),
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(),
+          filled: true,
+          fillColor: Colors.white,
+        ),
+      ),
+      home: const AuthGate(),
+    ),
+  );
 }
 
-class _CounterAppState extends State<CounterApp> {
-  late final CounterModel _model;
-
-  @override
-  void initState() {
-    super.initState();
-    _model = CounterModel(now: widget.now);
-  }
-
-  @override
-  void dispose() {
-    _model.dispose();
-    super.dispose();
-  }
-
+class AuthGate extends StatelessWidget {
+  const AuthGate({super.key});
   @override
   Widget build(BuildContext context) {
-    debugPrint('build: CounterApp');
-    return CounterScope(
-      model: _model,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Лічильник з історією',
-        theme: ThemeData(
-          fontFamily: 'EvidenceFont',
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF315DA8)),
-          useMaterial3: true,
-        ),
-        home: const AppNavigator(),
-      ),
+    final authenticated = context.select<AuthModel, bool>(
+      (model) => model.isAuthenticated,
     );
+    BuildProbe.hit('AuthGate');
+    return authenticated ? const HomeScreen() : const LoginScreen();
   }
 }

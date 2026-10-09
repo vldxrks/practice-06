@@ -1,10 +1,10 @@
-name: Flutter verification
+name: Provider practical verification
 
 on:
   push:
-    branches: [main]
-    tags: ['stage-*']
+    branches: [practice-06-part2]
   pull_request:
+    branches: [practice-06-part2]
   workflow_dispatch:
 
 permissions:
@@ -15,28 +15,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.35.7'
           channel: stable
           cache: true
-      - name: Verify final stage and capture evidence
+      - name: Analyze, test, measure and build
         run: bash tool/verify.sh
-      - name: Verify the lifting stage
-        run: |
-          git worktree add --detach ../stage-1 stage-1-lifting
-          cd ../stage-1
-          flutter pub get
-          flutter analyze --fatal-infos
-          flutter test --reporter expanded
-          flutter build web --release
       - name: Upload verification evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: flutter-evidence
+          name: provider-verification
           path: |
             docs/
             README.md
@@ -44,5 +34,5 @@ jobs:
       - name: Upload web build
         uses: actions/upload-artifact@v4
         with:
-          name: counter-web
+          name: provider-web
           path: build/web/

@@ -1,0 +1,17 @@
+{
+  "failed_login": {
+    "AuthGate": 2,
+    "AuthFeedback": 2,
+    "LoginAction": 2
+  },
+  "change_name": {
+    "ProfileEmail": 1,
+    "ProfileName": 1,
+    "ProfileBio": 1
+  },
+  "change_bio": {
+    "ProfileEmail": 1,
+    "ProfileName": 1,
+    "ProfileBio": 1
+  }
+}

@@ -1,14 +1,17 @@
-00:00 +0: loading /workspace/scratch/c491dfdcab64/practice-06-provider/test/evidence_test.dart
-00:00 +0: capture real application states
+00:00 +0: loading /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart
+00:00 +0: measure real rebuilds for three controlled actions
 build: AuthGate
 build: LoginScreen
 build: LoginForm
 build: AuthFeedback
 build: LoginAction
+build: AuthGate
 build: AuthFeedback
 build: LoginAction
+build: AuthGate
 build: AuthFeedback
 build: LoginAction
+build: AuthGate
 build: AuthFeedback
 build: LoginAction
 build: AuthGate
@@ -16,7 +19,10 @@ build: HomeScreen
 build: ProfileName
 build: ProfileEmail
 build: ProfileBio
-build: ProfileEditor
+build: ProfileEmail
 build: ProfileName
 build: ProfileBio
-00:02 +1: All tests passed!
+build: ProfileEmail
+build: ProfileName
+build: ProfileBio
+00:01 +1: All tests passed!

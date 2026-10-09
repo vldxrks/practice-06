@@ -1,0 +1,15 @@
+Formatted lib/app.dart
+Formatted lib/main.dart
+Formatted lib/models/auth_model.dart
+Formatted lib/models/profile_model.dart
+Formatted lib/models/user_profile.dart
+Formatted lib/screens/home_screen.dart
+Formatted lib/screens/login_screen.dart
+Formatted lib/screens/profile_editor.dart
+Formatted lib/services/fake_api.dart
+Formatted lib/widgets/build_probe.dart
+Formatted test/evidence_test.dart
+Formatted test/models_test.dart
+Formatted test/rebuild_test.dart
+Formatted test/ui_test.dart
+Formatted 14 files (14 changed) in 0.56 seconds.

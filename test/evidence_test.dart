@@ -1,115 +1,79 @@
 import 'dart:io';
 import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:practice_06_counter/app.dart';
+import 'package:practice_06_provider/app.dart';
+import 'package:practice_06_provider/services/fake_api.dart';
 
-/// Writes real Flutter renders and rebuild logs only when explicitly requested.
 void main() {
-  const capture = bool.fromEnvironment('CAPTURE_EVIDENCE');
-
-  testWidgets('capture screenshots and a measured rebuild journal', (
-    tester,
-  ) async {
-    await tester.binding.setSurfaceSize(const Size(430, 932));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
-    final font = FontLoader('EvidenceFont')
-      ..addFont(rootBundle.load('assets/fonts/DejaVuSans.ttf'));
-    await font.load();
-    final icons = FontLoader('MaterialIcons')
-      ..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'));
-    await icons.load();
-
-    final boundaryKey = GlobalKey();
-    final messages = <String>[];
-    final journal = <String>[];
-    final originalPrint = debugPrint;
-    debugPrint = (String? message, {int? wrapWidth}) {
-      if (message != null && message.startsWith('build:'))
-        messages.add(message);
-    };
-    try {
-      await tester.pumpWidget(
+  testWidgets(
+    'capture real application states',
+    (t) async {
+      await t.binding.setSurfaceSize(const Size(430, 932));
+      addTearDown(() => t.binding.setSurfaceSize(null));
+      await (FontLoader(
+        'EvidenceFont',
+      )..addFont(rootBundle.load('assets/fonts/DejaVuSans.ttf'))).load();
+      await (FontLoader(
+        'MaterialIcons',
+      )..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'))).load();
+      final key = GlobalKey();
+      await t.pumpWidget(
         RepaintBoundary(
-          key: boundaryKey,
-          child: CounterApp(now: () => DateTime(2026, 10, 8, 9, 30)),
+          key: key,
+          child: ProfileApp(
+            api: FakeApi(failureRate: 0, failFirstRequest: true),
+          ),
         ),
       );
-      await tester.pumpAndSettle();
-
-      Future<void> screenshot(String name) async {
+      await t.pumpAndSettle();
+      Future<void> capture(String name) async {
         final boundary =
-            boundaryKey.currentContext!.findRenderObject()!
-                as RenderRepaintBoundary;
-        await tester.runAsync(() async {
+            key.currentContext!.findRenderObject()! as RenderRepaintBoundary;
+        await t.runAsync(() async {
           final image = await boundary.toImage(pixelRatio: 2);
           final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
           image.dispose();
-          if (bytes == null) throw StateError('Screenshot encoding failed');
-          final directory = Directory('docs/screenshots')
-            ..createSync(recursive: true);
-          await File('${directory.path}/$name.png').writeAsBytes(
-            bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes),
-          );
+          Directory('docs/screenshots').createSync(recursive: true);
+          File(
+            'docs/screenshots/$name.png',
+          ).writeAsBytesSync(bytes!.buffer.asUint8List());
         });
       }
 
-      messages.clear();
-      await tester.tap(find.byKey(const Key('increment')));
-      await tester.pumpAndSettle();
-      expect(
-        messages,
-        unorderedEquals(['build: HistoryBadge', 'build: CounterValue']),
+      await capture('login');
+      await t.enterText(find.byKey(const Key('email')), FakeApi.demoEmail);
+      await t.enterText(
+        find.byKey(const Key('password')),
+        FakeApi.demoPassword,
       );
-      journal.addAll(['ACTION: increment by 1', ...messages, '']);
-
-      messages.clear();
-      await tester.tap(find.text('5'));
-      await tester.pumpAndSettle();
-      expect(messages, ['build: CounterControls']);
-      journal.addAll(['ACTION: select step 5', ...messages, '']);
-
-      await tester.tap(find.byKey(const Key('increment')));
-      await tester.pumpAndSettle();
-      await screenshot('counter');
-      await tester.tap(find.byKey(const Key('decrement')));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const Key('open-history')));
-      await tester.pumpAndSettle();
-      await screenshot('history');
-
-      messages.clear();
-      await tester.tap(find.byKey(const Key('clear-history')));
-      await tester.pumpAndSettle();
-      expect(find.text('Історія порожня'), findsOneWidget);
-      expect(messages, contains('build: HistoryList'));
-      expect(messages, isNot(contains('build: HistoryScreen')));
-      journal.addAll(['ACTION: clear history', ...messages, '']);
-      await screenshot('empty-history');
-
-      await tester.pageBack();
-      await tester.pumpAndSettle();
-      expect(
-        tester.widget<Text>(find.byKey(const Key('counter-value'))).data,
-        '1',
+      await t.tap(find.byKey(const Key('login')));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 200));
+      await capture('loading');
+      await t.pump(const Duration(seconds: 1));
+      await t.pumpAndSettle();
+      await capture('error');
+      await t.tap(find.byKey(const Key('login')));
+      await t.pump();
+      await t.pump(const Duration(seconds: 1));
+      await t.pumpAndSettle();
+      await capture('home');
+      await t.tap(find.byKey(const Key('edit-profile')));
+      await t.pumpAndSettle();
+      await t.enterText(find.byKey(const Key('edit-name')), 'Олена');
+      await t.enterText(
+        find.byKey(const Key('edit-bio')),
+        'Створюю застосунки Flutter.',
       );
-      await tester.tap(find.byKey(const Key('decrement')));
-      await tester.pumpAndSettle();
-      expect(
-        find.textContaining('Значення не може бути від’ємним.'),
-        findsOneWidget,
-      );
-      await screenshot('non-negative-guard');
-      await tester.runAsync(
-        () =>
-            File('docs/rebuilds.log').writeAsString('${journal.join('\n')}\n'),
-      );
-      expect(tester.takeException(), isNull);
-    } finally {
-      debugPrint = originalPrint;
-    }
-  }, skip: !capture);
+      await t.pumpAndSettle();
+      await capture('edit');
+      await t.tap(find.byKey(const Key('save-profile')));
+      await t.pumpAndSettle();
+      await capture('updated');
+    },
+    skip: !const bool.fromEnvironment('CAPTURE_EVIDENCE'),
+  );
 }

@@ -1,83 +1,74 @@
-00:00 +0: loading /workspace/scratch/c491dfdcab64/practice-06-counter/test/evidence_test.dart
-00:00 +0: /workspace/scratch/c491dfdcab64/practice-06-counter/test/evidence_test.dart: capture screenshots and a measured rebuild journal
-00:00 +0 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/counter_model_test.dart: starts at zero with empty history
-00:00 +1 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/counter_model_test.dart: records time, action, before/after and newest-first order
-00:00 +2 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/counter_model_test.dart: rejects negative results without mutation or notification
-00:00 +3 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/counter_model_test.dart: reset is recorded; resetting zero is a no-op
-00:00 +4 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/counter_model_test.dart: clear history preserves the counter
-00:00 +5 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/counter_model_test.dart: returned history is immutable and is a stable snapshot
-00:00 +6 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/counter_model_test.dart: one notification per mutation, none for no-ops
-00:00 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
-build: CounterApp
-build: AppNavigator
-build: CounterScreen
-build: HistoryBadge
-build: CounterValue
-build: CounterControls
-build: CounterControls
-build: HistoryBadge
-build: CounterValue
-build: HistoryBadge
-build: CounterValue
-build: AppNavigator
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
-build: HistoryScreen
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
-build: CounterApp
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
-build: HistoryList
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
-build: AppNavigator
-build: CounterScreen
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
-build: HistoryBadge
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
-build: HistoryBadge
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
-build: CounterScreen
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
-build: CounterValue
-build: CounterControls
-build: CounterControls
-build: HistoryBadge
-build: CounterValue
-build: AppNavigator
-build: HistoryScreen
-build: HistoryList
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
-build: HistoryList
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
-build: HistoryBadge
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
-build: HistoryBadge
-build: HistoryBadge
-build: CounterValue
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
-build: CounterScreen
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
-build: AppNavigator
-build: CounterScreen
-build: AppNavigator
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
-build: HistoryList
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
-build: HistoryScreen
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
-build: HistoryBadge
-build: HistoryBadge
-build: CounterValue
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
-build: HistoryList
-build: HistoryBadge
-build: CounterScreen
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
-build: AppNavigator
-build: CounterScreen
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/widget_test.dart: counter, history, clear and non-negative guard
-build: AppNavigator
-build: CounterScreen
-00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
-build: HistoryBadge
-build: CounterValue
-00:01 +9 ~1: /workspace/scratch/c491dfdcab64/practice-06-counter/test/rebuild_test.dart: step persists while visiting history; clearing preserves value
-00:01 +10 ~1: All tests passed!
+00:00 +0: loading /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart
+00:00 +0: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +0 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +1 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +2 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +3 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +4 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +5 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +6 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: validates fields, isolates text entry and password toggle
+build: AuthGate
+build: LoginScreen
+build: LoginForm
+00:00 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+build: AuthGate
+build: LoginScreen
+build: LoginForm
+00:00 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: validates fields, isolates text entry and password toggle
+build: AuthFeedback
+build: LoginAction
+00:00 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+build: AuthFeedback
+build: LoginAction
+00:01 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: validates fields, isolates text entry and password toggle
+build: LoginForm
+build: LoginAction
+00:01 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+build: AuthFeedback
+build: LoginAction
+build: AuthFeedback
+build: LoginAction
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: loading disables login, error retries, profile saves, logout clears form
+build: AuthGate
+build: LoginScreen
+build: LoginForm
+build: AuthFeedback
+build: LoginAction
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+build: AuthFeedback
+build: LoginAction
+build: AuthGate
+build: HomeScreen
+build: ProfileName
+build: ProfileEmail
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: loading disables login, error retries, profile saves, logout clears form
+build: AuthFeedback
+build: LoginAction
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+build: ProfileBio
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: loading disables login, error retries, profile saves, logout clears form
+build: AuthFeedback
+build: LoginAction
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+build: ProfileName
+build: ProfileBio
+00:01 +9 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: loading disables login, error retries, profile saves, logout clears form
+build: AuthFeedback
+build: LoginAction
+build: AuthGate
+build: HomeScreen
+build: ProfileName
+build: ProfileEmail
+build: ProfileBio
+build: ProfileEditor
+build: ProfileName
+build: ProfileBio
+build: AuthGate
+build: LoginScreen
+build: LoginForm
+build: AuthFeedback
+build: LoginAction
+00:03 +10 ~1: All tests passed!

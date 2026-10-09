@@ -1,224 +1,154 @@
-# Практична робота 6.1: базовий State Management у Flutter
+# Практична робота 6.2 — керування станом із Provider
 
-**Варіант 1 - лічильник з історією.**
-Дисципліна: «Програмування для мобільних платформ».
-
-Застосунок підтримує додавання й віднімання з кроком **1 / 5 / 10**, скидання,
-окремий екран історії та бейдж кількості записів на обох екранах.
-Інтерфейс українською. Сторонніх пакетів керування станом немає:
-прямі залежності - тільки `flutter` і `flutter_test` з Flutter SDK.
+**Варіант 2: авторизація та профіль.** Застосунок «Особистий простір» реалізує вхід, перевірку полів, імітацію запиту до сервера, повторну спробу після помилки, редагування профілю та вихід.
 
 ## Запуск
 
-Потрібні Flutter **3.35.7** (Dart 3.9.2) або сумісна новіша версія та Git.
-У репозиторії є платформи **Android** і **Web**.
+Якщо ви працюєте з отриманим архівом, відкрийте каталог `project/` і виконайте команди від `flutter pub get`. Команда `git clone` нижче призначена для використання після публікації гілки.
+
+Перевірено на **Flutter 3.35.7 / Dart 3.9.2**. Залежність `provider: ^6.1.5` зафіксована в `pubspec.lock` як 6.1.5+1. Інші пакети керування станом не використовуються.
 
 ```bash
+git clone --branch practice-06-part2 https://github.com/vldxrks/practice-06.git
+cd practice-06
 flutter pub get
 flutter run -d chrome
 ```
 
-Для Android запустіть емулятор або під'єднайте пристрій із USB debugging:
+Для Android: запустити емулятор або під’єднати телефон, виконати `flutter devices` та `flutter run -d <device-id>`. Android SDK має бути встановлено. Android-конфігурація включена до проєкту, але локально перевірено саме Web-збірку та Flutter-тести, не APK.
+
+### Навчальний обліковий запис
+
+| Поле | Значення |
+|---|---|
+| Email | `student@example.com` |
+| Пароль | `Flutter123!` |
+
+Це відкриті демонстраційні дані для локального `FakeApi`, а не справжній обліковий запис. Інші дані повертають **«Невірний email або пароль»**. Email перевіряється регулярним виразом, пароль має містити щонайменше 8 символів.
+
+Запит триває 1 секунду. Для правильного облікового запису є 20% імовірності імітованої серверної помилки. У такому разі натиснути **«Повторити»**; наступний запит знову має 20% імовірності збою. Під час очікування кнопка вимкнена й показує індикатор. Щоб гарантовано показати помилку першого запиту з правильними даними:
 
 ```bash
-flutter devices
-flutter run -d DEVICE_ID
-flutter build apk --debug
+flutter run -d chrome --dart-define=FAIL_FIRST_REQUEST=true
 ```
 
-Замість `DEVICE_ID` підставте ідентифікатор з `flutter devices`.
-Для Android потрібні Android SDK і JDK 17. Локальні шляхи SDK автоматично
-записуються Flutter у `android/local.properties`; цей файл не комітиться.
-Для Web потрібен Chrome, для запуску в іншому браузері:
-`flutter run -d web-server` і відкриття адреси, надрукованої в терміналі.
+У тестах випадковість вимкнено через `FakeApi(failureRate: 0)`; для перевірки Retry додатково встановлено `failFirstRequest: true`.
 
-## Обидва етапи в git
+## Реалізовані сценарії
 
-| Тег | Реалізація |
-| --- | --- |
-| `stage-1-lifting` | Значення та історія підняті у `_CounterAppState`; `setState`, параметри конструкторів та колбеки |
-| `stage-2-inherited` | `CounterModel extends ChangeNotifier`, `CounterScope extends InheritedNotifier<CounterModel>`, статичний `of(context)` |
+1. Введення email і пароля, валідація, показ/приховування пароля.
+2. Стани очікування, завантаження, помилки та успішної авторизації.
+3. Повідомлення про помилку й повторна спроба без повторного введення даних.
+4. Домашній екран з ім’ям, email, описом та кнопками редагування й виходу.
+5. Редагування імені (2–40 символів) та опису (до 160 символів), збереження або скасування.
+6. Вихід очищає профіль і повертає порожню форму входу. Профіль зберігається лише в пам’яті поточної сесії; після нового входу завантажуються початкові демонстраційні дані.
 
-Для першого етапу з окремою робочою директорією:
+## Архітектура та розподіл стану
+
+`MultiProvider` у [`lib/app.dart`](lib/app.dart) розміщено **над `MaterialApp`**. Обидві моделі створено через `ChangeNotifierProvider(create: ...)`. Provider керує їхнім життєвим циклом; `.value` не використовується.
+
+| Компонент | Відповідальність |
+|---|---|
+| [`AuthModel`](lib/models/auth_model.dart) | Валідація входу, стани `idle/loading/error/authenticated`, асинхронний вхід і вихід, повідомлення про помилки. |
+| [`ProfileModel`](lib/models/profile_model.dart) | Поточний профіль, перевірка та оновлення імені/опису, очищення. Незмінені дані не викликають `notifyListeners()`. |
+| [`UserProfile`](lib/models/user_profile.dart) | Незмінний об’єкт даних із `copyWith`. |
+| [`FakeApi`](lib/services/fake_api.dart) | Затримка, перевірка демонстраційного облікового запису, випадковий збій, повернення профілю. |
+| [`AuthGate`](lib/app.dart) | Вибір екрана за `isAuthenticated`. |
+| [`LoginForm`](lib/screens/login_screen.dart), [`ProfileEditor`](lib/screens/profile_editor.dart) | Локальні контролери полів, відображення валідації, події UI. |
+
+Бізнес-правила розташовані в моделях і сервісі. Віджети викликають їхні методи. Прапорець видимості пароля та локальне повідомлення форми редагування змінюються через `setState`; текст полів належить локальним `TextEditingController`, а не глобальним моделям.
+
+В `AuthModel` немає поля пароля: він передається лише аргументом запиту. Форма зберігає введення для явної повторної спроби; після успішного входу її контролери видаляються через `dispose`. Усі контролери редактора також звільняються. Повторний одночасний вхід блокується моделлю. Результат старого запиту після виходу або `dispose` ігнорується за номером покоління запиту.
+
+### Де використано API Provider
+
+| API | Місце | Причина |
+|---|---|---|
+| `context.watch<AuthModel>()` | `AuthFeedback`, `login_screen.dart` | Малий віджет повідомлення реагує на зміни стану авторизації. |
+| `context.read<T>()` | Обробники входу, виходу, збереження; створення залежностей | Одноразовий доступ до методу/залежності без підписки віджета. |
+| `context.select<AuthModel, bool>()` | `AuthGate`, `app.dart` | Екран змінюється лише при зміні факту авторизації. `loading/error` не перебудовують корінь. |
+| `context.select<ProfileModel, String>()` | `ProfileName`, `ProfileEmail`, `home_screen.dart` | Кожен віджет слухає тільки своє поле. |
+| `Consumer<AuthModel>` | `LoginAction`, `login_screen.dart` | Локалізує оновлення кнопки/індикатора; незмінна іконка передається через `child`. |
+| `Selector<ProfileModel, String>` | `ProfileBio`, `home_screen.dart` | Опис перебудовується тільки при зміні вибраного рядка. |
+
+Вибрані значення — незмінні `bool` та `String`, тому порівняння коректно відокремлює потрібні оновлення. `watch` у великому батьківському віджеті спричиняв би зайві перебудови. `read` застосовується в обробниках, а не для відображення даних, які мають оновлюватися.
+
+## Вимірювання перебудов: до та після
+
+Спочатку реалізовано робочу версію з `watch`/`Consumer`. Її код і результати збережено окремим комітом **`feat: implement login and profile UI with baseline rebuild measurements`**. Наступний коміт **`perf: isolate authentication and profile rebuilds with select and Selector`** містить оптимізацію та повторні вимірювання. Обидва збережені в Git bundle та після публікації будуть доступні в [історії гілки](https://github.com/vldxrks/practice-06/commits/practice-06-part2).
+
+[`BuildProbe`](lib/widgets/build_probe.dart) у debug-режимі виконує `debugPrint('build: ...')` та рахує виклики позначених `build`/builder. Вимірювання проведені справжнім Flutter widget test [`rebuild_test.dart`](test/rebuild_test.dart), не розраховані теоретично.
+
+| Контрольована дія | До оптимізації | Після оптимізації | Разом до → після |
+|---|---|---|---|
+| Невдалий вхід: loading → error | `AuthGate ×2`, `AuthFeedback ×2`, `LoginAction ×2` | `AuthFeedback ×2`, `LoginAction ×2`; `AuthGate ×0` | **6 → 4** |
+| Зміна лише імені | `ProfileName ×1`, `ProfileEmail ×1`, `ProfileBio ×1` | `ProfileName ×1`; інші ×0 | **3 → 1** |
+| Зміна лише опису | `ProfileName ×1`, `ProfileEmail ×1`, `ProfileBio ×1` | `ProfileBio ×1`; інші ×0 | **3 → 1** |
+
+Це кількість викликів **лише інструментованих віджетів**, а не всіх внутрішніх віджетів Flutter, кадрів чи GPU-операцій. Початкове відображення та підготовче введення не враховуються: перед кожною дією лічильник скидається після стабілізації дерева. Для невдалого входу враховано обидва повідомлення моделі — початок і завершення запиту. Для імені й опису викликається `ProfileModel.update` після входу, щоб відокремити реакцію Provider від анімації переходу редактора. Саме редагування через екран окремо перевірено UI-тестом.
+
+Первинні дані: [до, JSON](docs/verification/rebuilds-before.json), [після, JSON](docs/verification/rebuilds-after.json), [лог до](docs/verification/rebuild-before.txt), [лог після](docs/verification/rebuild-after.txt). Після оптимізації тест також перевіряє точні очікувані лічильники, тому повернення зайвих підписок спричинить падіння тесту.
+
+Введення тексту й перемикання видимості пароля не перебудовують `AuthGate`, `LoginScreen` та `HomeScreen`; це окремо перевіряє `ui_test.dart`. Локальна форма може перебудовуватися, оскільки це її власний стан.
+
+### Повторення вимірювання
+
+У поточній гілці:
 
 ```bash
-git worktree add --detach ../counter-stage-1 stage-1-lifting
-cd ../counter-stage-1
+flutter test test/rebuild_test.dart --dart-define=MEASURE=true --dart-define=MEASUREMENT_LABEL=after --reporter expanded
+```
+
+Для базової версії знайти SHA коміту за назвою та відкрити його в окремому робочому каталозі:
+
+```bash
+git log --oneline --grep='baseline rebuild measurements'
+git worktree add --detach ../practice-06-before <SHA_базового_коміту>
+cd ../practice-06-before
 flutter pub get
-flutter run -d chrome
+flutter test test/rebuild_test.dart --dart-define=MEASURE=true --dart-define=MEASUREMENT_LABEL=before --reporter expanded
 ```
 
-Для перегляду другого етапу: `git switch --detach stage-2-inherited`.
-Повернення до поточної гілки: `git switch main`.
-Перегляд зміни архітектури: `git diff stage-1-lifting stage-2-inherited -- lib`.
+## Скриншоти
 
-## Таблиця стану
+Знімки отримані з реального дерева віджетів Flutter через `RepaintBoundary.toImage` у тесті [`evidence_test.dart`](test/evidence_test.dart), розмір екрана — 430 × 932 логічних пікселі. Вони показують послідовність входу з примусовим першим збоєм і подальшим успішним Retry.
 
-| Дані | Тип стану | Етап 1: де живуть | Етап 2: де живуть | Чому |
-| --- | --- | --- | --- | --- |
-| Поточне значення | Стан застосунку | `_CounterAppState._value` | `CounterModel._value` | Спільне з історією, не залежить від життєвого циклу сторінки |
-| Історія змін | Стан застосунку | `_CounterAppState._history` | `CounterModel._history` | Потрібна окремому екрану та бейджам обох екранів |
-| Кількість записів | Обчислюване значення | `_history.length` | `historyCount` | Не дублюємо вже наявні дані |
-| Обраний крок | Ефемерний стан | `_CounterControlsState._step`, `setState` | Так само | Потрібен лише локальним елементам керування |
-| Відкрита сторінка | Стан навігації | `_CounterAppState._historyVisible`, `setState` | `_AppNavigatorState._historyVisible`, `setState` | Не належить до бізнес-моделі |
+| Вхід | Завантаження | Помилка та Retry |
+|---|---|---|
+| <img src="docs/screenshots/login.png" width="250" alt="Форма входу"> | <img src="docs/screenshots/loading.png" width="250" alt="Індикатор завантаження"> | <img src="docs/screenshots/error.png" width="250" alt="Помилка сервера та кнопка Повторити"> |
 
-Обраний крок зберігається при переході до історії та поверненні, оскільки
-сторінка лічильника залишається в стеку `Navigator`. Після завершення
-застосунку стан скидається: постійне збереження в цьому завданні не вимагається.
+| Профіль | Редагування | Після збереження |
+|---|---|---|
+| <img src="docs/screenshots/home.png" width="250" alt="Початковий профіль"> | <img src="docs/screenshots/edit.png" width="250" alt="Редагування профілю"> | <img src="docs/screenshots/updated.png" width="250" alt="Оновлені ім’я та опис"> |
 
-## Архітектура другого етапу
+## Перевірка якості
 
-- `lib/models/counter_entry.dart` - незмінний запис з `const`-конструктором:
-  час, тип дії, значення до та після.
-- `lib/state/counter_model.dart` - операції `change`, `reset`, `clearHistory`;
-  приватні дані, незмінний знімок історії через `List.unmodifiable`.
-- `lib/state/counter_scope.dart` - доступ до моделі через `of(context)`.
-- `lib/screens/` - навігація, екран лічильника та екран історії.
-- `lib/widgets/` - лічильник, локальні елементи керування, бейдж і список.
-- `lib/app.dart` - створення моделі в `initState` та її звільнення в `dispose`.
+| Перевірка | Фактичний результат |
+|---|---|
+| `flutter analyze --no-pub --fatal-infos` | **No issues found** — [лог](docs/verification/analyze.txt). |
+| `flutter test --no-pub --reporter expanded` | **10 тестів пройдено**, 1 спеціальний тест знімків пропущено без прапорця — [лог](docs/verification/tests.txt). |
+| Тест з `CAPTURE_EVIDENCE=true` | **1 тест пройдено**, збережено 6 знімків — [лог](docs/verification/evidence.txt). |
+| Контроль лічильників після оптимізації | **1 тест пройдено** — [лог](docs/verification/rebuild-after.txt). |
+| `flutter build web --release --no-pub` | **Built build/web** — [лог](docs/verification/web-build.txt). |
 
-`CounterScope` стоїть **над `MaterialApp` і Navigator**, тому обидві сторінки
-бачать ту саму модель. Передавання спільних даних через проміжні віджети
-прибрано. Колбек `onOpenHistory` відповідає лише за навігацію.
+Модельні тести перевіряють валідацію, успішний вхід/вихід, неправильні дані, серверну помилку/Retry, оновлення профілю без зайвих сповіщень, скасування застарілого входу та безпечне завершення після `dispose`. UI-тести перевіряють локальність форми, індикатор і блокування кнопки, помилку, повторний вхід, редагування та очищення форми після виходу.
 
-У `build` підписуються тільки `CounterValue`, `HistoryBadge` і `HistoryList`:
-
-```dart
-final value = CounterScope.of(context).value;
-```
-
-Обробники кнопок читають модель без реєстрації залежності:
-
-```dart
-CounterScope.of(context, listen: false).change(_step);
-```
-
-Тому натискання «Додати» не перебудовує `CounterApp`, `AppNavigator`,
-`CounterScreen` або `CounterControls`. Саме підписка визначає межі
-перебудов; `const` лише допомагає повторно використовувати незмінні віджети.
-Один `ChangeNotifier` повідомляє **всіх** своїх підписників: наприклад,
-очищення історії може також перебудувати лічильник, хоча його число не змінилося.
-При відкритій історії в дереві є два бейджі, один з них на прихованій сторінці.
-
-`TextEditingController` не створюється, оскільки у варіанті 1 немає поля
-введення. Єдиний власний об'єкт, що вимагає `dispose`, - `CounterModel`.
-
-## Правила поведінки
-
-1. Будь-яка успішна зміна числа створює рівно один запис і одну нотифікацію.
-2. Записи показуються від нового до старого через `ListView.builder`.
-3. Спроба отримати число нижче нуля відхиляється повністю: число та історія
-   незмінні, користувач бачить пояснення у `SnackBar`.
-4. Скидання ненульового числа створює запис «Скинуто до нуля».
-   Скидання 0 у 0 не є зміною й не створює зайвого запису.
-5. Очищення історії не змінює число; очищення порожньої історії не надсилає
-   зайвої нотифікації.
-6. Перезапуск застосунку починає нову сесію з нуля.
-
-## Перевірки та відтворення доказів
-
-Перевірено з Flutter 3.35.7 / Dart 3.9.2:
-
-| Перевірка | Результат |
-| --- | --- |
-| `flutter analyze --fatal-infos`, обидва етапи | Без зауважень |
-| Основні тести другого етапу | 10 пройшли |
-| Сценарій інтерфейсу першого етапу | Пройшов |
-| Окреме захоплення скриншотів і журналу | Пройшло |
-| Release-збірка Web | Успішна |
-
-Текстові результати команд збережено в `docs/verification/`.
-Android-проєкт включено; APK у цьому середовищі не збирався.
-
-```bash
-flutter analyze --fatal-infos
-flutter test --reporter expanded
-flutter test test/evidence_test.dart --dart-define=CAPTURE_EVIDENCE=true
-python3 tool/finalize_evidence.py
-flutter build web --release
-```
-
-Або одна команда на Linux/macOS/Git Bash з установленим Python 3:
+Усі перевірки можна повторити однією командою:
 
 ```bash
 bash tool/verify.sh
 ```
 
-`test/counter_model_test.dart` перевіряє порядок і незмінність історії,
-час, обидві операції, скидання, очищення, межу нуля та кількість нотифікацій.
-`test/widget_test.dart` перевіряє основний сценарій через інтерфейс
-і повернення системною кнопкою «Назад».
-`test/rebuild_test.dart` перевіряє точний набір перебудованих віджетів,
-збереження кроку й незалежність числа від очищення історії.
-`test/evidence_test.dart` окремо створює PNG і реальний журнал `debugPrint`.
-Він пропускається без прапорця `CAPTURE_EVIDENCE`, щоб звичайний запуск
-тестів не переписував документацію.
-
-Шрифт DejaVu Sans включено для відтворюваності українського тексту на
-скриншотах; ліцензія - `assets/fonts/LICENSE.txt`. Це ресурс, а не пакет.
-
-GitHub Actions перевіряє основну гілку та тег першого етапу, збирає Web,
-публікує журнали й скриншоти як артефакт `flutter-evidence`.
-CI не комітить файли автоматично. Для включення доказів у репозиторій
-виконайте наведені команди або завантажте артефакт, а потім:
-
-```bash
-git add README.md docs pubspec.lock
-git commit -m "docs: record verified Flutter build and screenshots"
-git push
-```
-
-## Журнал перебудов і скриншоти
-
-<!-- EVIDENCE:START -->
-
-Журнал нижче записано під час виконання `test/evidence_test.dart`.
-Скриншоти є рендерами справжніх Flutter-віджетів у тестовому середовищі.
-Час записів фіксований для відтворюваності знімків.
-
-```text
-ACTION: increment by 1
-build: HistoryBadge
-build: CounterValue
-
-ACTION: select step 5
-build: CounterControls
-
-ACTION: clear history
-build: HistoryList
-build: HistoryBadge
-build: HistoryBadge
-build: CounterValue
-```
-
-### Лічильник
-
-![Лічильник](docs/screenshots/counter.png)
-
-### Історія
-
-![Історія](docs/screenshots/history.png)
-
-### Порожня історія
-
-![Порожня історія](docs/screenshots/empty-history.png)
-
-### Захист від від’ємного значення
-
-![Захист від від’ємного значення](docs/screenshots/non-negative-guard.png)
-
-<!-- EVIDENCE:END -->
+Цей сценарій також виконує [GitHub Actions](.github/workflows/flutter.yml) для гілки `practice-06-part2` та зберігає докази й Web-збірку як артефакти. Наявність конфігурації CI сама по собі не означає успішного завершення віддаленого запуску; наведена таблиця відображає локальні фактичні результати. [Примітки щодо середовища перевірки](docs/verification/README.md).
 
 ## Висновок
 
-Спільний стан піднято до найближчого спільного предка на першому етапі,
-потім винесено в `ChangeNotifier` та надано через `InheritedNotifier`.
-Ефемерний вибір кроку лишився локальним. Підписки в кінцевих віджетах
-відокремлюють оновлення даних від перебудов каркаса екрана.
+Дві моделі `ChangeNotifier` відокремлюють авторизацію від даних профілю, а локальний стан форм залишається у віджетах. Вибіркові підписки усувають зайві перебудови: корінь не реагує на `loading/error`, зміна імені не перебудовує email і опис. Асинхронний сценарій має явні стани, обробку помилок і повторну спробу; результати підтверджені тестами, лічильниками та скриншотами.
 
 ## Джерела
 
-- [Ephemeral state and app state](https://docs.flutter.dev/data-and-backend/state-mgmt/ephemeral-vs-app)
-- [InheritedNotifier](https://api.flutter.dev/flutter/widgets/InheritedNotifier-class.html)
-- [ChangeNotifier](https://api.flutter.dev/flutter/foundation/ChangeNotifier-class.html)
-- [State.setState](https://api.flutter.dev/flutter/widgets/State/setState.html)
+- [Flutter: Simple app state management](https://docs.flutter.dev/data-and-backend/state-mgmt/simple)
+- [Provider на pub.dev](https://pub.dev/packages/provider)
+- [Selector — API](https://pub.dev/documentation/provider/latest/provider/Selector-class.html)
+- [ChangeNotifier — API](https://api.flutter.dev/flutter/foundation/ChangeNotifier-class.html)
+- [Flutter: Build a form with validation](https://docs.flutter.dev/cookbook/forms/validation)

@@ -1,11 +1,11 @@
 {
-  "name": "Лічильник з історією",
-  "short_name": "Лічильник",
+  "name": "Особистий простір",
+  "short_name": "Профіль",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#faf9fd",
-  "theme_color": "#315da8",
-  "description": "Практична 6.1: State Management у Flutter",
+  "background_color": "#f4f6f2",
+  "theme_color": "#356859",
+  "description": "Практична 6.2: Provider, авторизація та профіль",
   "orientation": "portrait-primary",
   "prefer_related_applications": false
 }
