@@ -1,24 +1,20 @@
-name: practice_06_counter
-description: 'Практична 6.1. Варіант 1: лічильник з історією.'
+name: practice_06_provider
+description: 'Практична 6.2. Варіант 2: авторизація та профіль.'
 publish_to: none
 version: 1.0.0+1
-
 environment:
   sdk: '>=3.9.0 <4.0.0'
   flutter: '>=3.35.0'
-
 dependencies:
   flutter:
     sdk: flutter
-
+  provider: ^6.1.5
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 flutter:
   uses-material-design: true
   fonts:
     - family: EvidenceFont
       fonts:
         - asset: assets/fonts/DejaVuSans.ttf
-

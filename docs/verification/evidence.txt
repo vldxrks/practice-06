@@ -1,3 +1,0 @@
-00:00 +0: loading /workspace/scratch/c491dfdcab64/practice-06-counter/test/evidence_test.dart
-00:00 +0: capture screenshots and a measured rebuild journal
-00:01 +1: All tests passed!
