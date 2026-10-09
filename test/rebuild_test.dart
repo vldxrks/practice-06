@@ -44,6 +44,9 @@ void main() {
     profile.update(name: profile.name, bio: 'Новий опис');
     await t.pumpAndSettle();
     results['change_bio'] = Map.of(BuildProbe.counts);
+    expect(results['failed_login'], {'AuthFeedback': 2, 'LoginAction': 2});
+    expect(results['change_name'], {'ProfileName': 1});
+    expect(results['change_bio'], {'ProfileBio': 1});
     expect(find.text('Вітаємо, Олена!'), findsOneWidget);
     expect(find.text('Новий опис'), findsOneWidget);
     if (const bool.fromEnvironment('MEASURE')) {
