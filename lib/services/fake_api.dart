@@ -10,8 +10,12 @@ class ApiException implements Exception {
 
 /// No real network or credentials storage. Failure injection makes tests repeatable.
 class FakeApi {
-  FakeApi({Random? random, this.delay = const Duration(seconds: 1),
-    this.failureRate = .2, this.failFirstRequest = false}) : _random = random ?? Random();
+  FakeApi({
+    Random? random,
+    this.delay = const Duration(seconds: 1),
+    this.failureRate = .2,
+    this.failFirstRequest = false,
+  }) : _random = random ?? Random();
   static const demoEmail = 'student@example.com';
   static const demoPassword = 'Flutter123!';
   final Random _random;
@@ -26,10 +30,14 @@ class FakeApi {
     if (email.trim().toLowerCase() != demoEmail || password != demoPassword) {
       throw const ApiException('Невірний email або пароль');
     }
-    if ((failFirstRequest && _requests == 1) || _random.nextDouble() < failureRate) {
+    if ((failFirstRequest && _requests == 1) ||
+        _random.nextDouble() < failureRate) {
       throw const ApiException('Сервер недоступний. Спробуйте ще раз.');
     }
-    return const UserProfile(email: demoEmail, name: 'Студент',
-      bio: 'Вивчаю Flutter та керування станом.');
+    return const UserProfile(
+      email: demoEmail,
+      name: 'Студент',
+      bio: 'Вивчаю Flutter та керування станом.',
+    );
   }
 }

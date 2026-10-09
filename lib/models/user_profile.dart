@@ -3,7 +3,6 @@ class UserProfile {
   final String email;
   final String name;
   final String bio;
-  UserProfile copyWith({String? name, String? bio}) => UserProfile(
-    email: email, name: name ?? this.name, bio: bio ?? this.bio,
-  );
+  UserProfile copyWith({String? name, String? bio}) =>
+      UserProfile(email: email, name: name ?? this.name, bio: bio ?? this.bio);
 }
