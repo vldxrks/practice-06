@@ -1,0 +1,12 @@
+{
+  "failed_login": {
+    "AuthFeedback": 2,
+    "LoginAction": 2
+  },
+  "change_name": {
+    "ProfileName": 1
+  },
+  "change_bio": {
+    "ProfileBio": 1
+  }
+}

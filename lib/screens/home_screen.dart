@@ -91,7 +91,7 @@ class ProfileName extends StatelessWidget {
   const ProfileName({super.key});
   @override
   Widget build(BuildContext context) {
-    final name = context.watch<ProfileModel>().name;
+    final name = context.select<ProfileModel, String>((model) => model.name);
     BuildProbe.hit('ProfileName');
     return Text(
       'Вітаємо, $name!',
@@ -106,7 +106,7 @@ class ProfileEmail extends StatelessWidget {
   const ProfileEmail({super.key});
   @override
   Widget build(BuildContext context) {
-    final email = context.watch<ProfileModel>().email;
+    final email = context.select<ProfileModel, String>((model) => model.email);
     BuildProbe.hit('ProfileEmail');
     return Text(
       email,
@@ -119,11 +119,12 @@ class ProfileEmail extends StatelessWidget {
 class ProfileBio extends StatelessWidget {
   const ProfileBio({super.key});
   @override
-  Widget build(BuildContext context) => Consumer<ProfileModel>(
-    builder: (_, profile, __) {
+  Widget build(BuildContext context) => Selector<ProfileModel, String>(
+    selector: (_, model) => model.bio,
+    builder: (_, bio, __) {
       BuildProbe.hit('ProfileBio');
       return Text(
-        profile.bio.isEmpty ? 'Опис ще не додано.' : profile.bio,
+        bio.isEmpty ? 'Опис ще не додано.' : bio,
         key: const Key('profile-bio'),
       );
     },

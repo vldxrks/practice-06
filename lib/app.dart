@@ -51,7 +51,9 @@ class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
   @override
   Widget build(BuildContext context) {
-    final authenticated = context.watch<AuthModel>().isAuthenticated;
+    final authenticated = context.select<AuthModel, bool>(
+      (model) => model.isAuthenticated,
+    );
     BuildProbe.hit('AuthGate');
     return authenticated ? const HomeScreen() : const LoginScreen();
   }
