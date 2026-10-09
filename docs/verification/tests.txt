@@ -1,0 +1,74 @@
+00:00 +0: loading /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart
+00:00 +0: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +0 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +1 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +2 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +3 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +4 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +5 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +6 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:00 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: validates fields, isolates text entry and password toggle
+build: AuthGate
+build: LoginScreen
+build: LoginForm
+00:00 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+build: AuthGate
+build: LoginScreen
+build: LoginForm
+00:00 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: validates fields, isolates text entry and password toggle
+build: AuthFeedback
+build: LoginAction
+00:00 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+build: AuthFeedback
+build: LoginAction
+00:01 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: validates fields, isolates text entry and password toggle
+build: LoginForm
+build: LoginAction
+00:01 +7 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+build: AuthFeedback
+build: LoginAction
+build: AuthFeedback
+build: LoginAction
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: loading disables login, error retries, profile saves, logout clears form
+build: AuthGate
+build: LoginScreen
+build: LoginForm
+build: AuthFeedback
+build: LoginAction
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+build: AuthFeedback
+build: LoginAction
+build: AuthGate
+build: HomeScreen
+build: ProfileName
+build: ProfileEmail
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: loading disables login, error retries, profile saves, logout clears form
+build: AuthFeedback
+build: LoginAction
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+build: ProfileBio
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: loading disables login, error retries, profile saves, logout clears form
+build: AuthFeedback
+build: LoginAction
+00:01 +8 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/rebuild_test.dart: measure real rebuilds for three controlled actions
+build: ProfileName
+build: ProfileBio
+00:01 +9 ~1: /workspace/scratch/c491dfdcab64/practice-06-provider/test/ui_test.dart: loading disables login, error retries, profile saves, logout clears form
+build: AuthFeedback
+build: LoginAction
+build: AuthGate
+build: HomeScreen
+build: ProfileName
+build: ProfileEmail
+build: ProfileBio
+build: ProfileEditor
+build: ProfileName
+build: ProfileBio
+build: AuthGate
+build: LoginScreen
+build: LoginForm
+build: AuthFeedback
+build: LoginAction
+00:03 +10 ~1: All tests passed!
